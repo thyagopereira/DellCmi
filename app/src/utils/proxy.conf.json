@@ -1,0 +1,11 @@
+{
+    "/api/*":{
+        "target": "http://owc-lqd.dsc.ufcg.edu.br:8081",
+        "secure": false,
+        "logLevel": "debug",
+        "pathRewrite":{
+            "^/api": ""
+        }
+
+    }
+}
