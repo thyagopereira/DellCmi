@@ -1,5 +1,6 @@
 package cmiDellConnect.services;
 
+import java.io.IOException;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.net.ProxySelector;
@@ -17,12 +18,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScrapService {
 
-    public String initConnection(String host, String port) {
+    public String initConnection(String host, String port) throws IOException, InterruptedException {
         HttpClient client = getClient(host, Integer.parseInt(port));
 
         HttpResponse<String> reponse = client.send(createRequest(), BodyHandlers.ofString());
 
-        return reponse;
+        return reponse.toString();
     }
 
 
@@ -42,12 +43,11 @@ public class ScrapService {
 
     private HttpRequest createRequest(){
         return HttpRequest.newBuilder()
-        .uri(URI.create("http://owc-lqd.dsc.ufcg.edu.br:8081/cs/"))
+        .uri(URI.create("http://owc-lqd.dsc.ufcg.edu.br:8081/cs/login/login.htm"))
         .timeout(Duration.ofMinutes(2))
         .header("Content-Type", "application/json")
         .GET()
         .build();
     }
-
     
 }

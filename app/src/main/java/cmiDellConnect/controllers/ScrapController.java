@@ -36,10 +36,9 @@ public class ScrapController {
         try {
             return new ResponseEntity<String>(service.initConnection(HOST, PORT), HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
         }
-
-        return new ResponseEntity<String>("Proxy is not right setted" , HttpStatus.BAD_GATEWAY);
+        return new ResponseEntity<String>("Proxy is not right setted", HttpStatus.BAD_GATEWAY);
+        
 
     }
 }
