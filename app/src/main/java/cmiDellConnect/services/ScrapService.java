@@ -21,9 +21,10 @@ public class ScrapService {
     public String initConnection(String host, String port) throws IOException, InterruptedException {
         HttpClient client = getClient(host, Integer.parseInt(port));
 
-        HttpResponse<String> reponse = client.send(createRequest(), BodyHandlers.ofString());
+        String uri = "http://owc-lqd.dsc.ufcg.edu.br:8081/cs/login/login.htm";
+        HttpResponse<String> response = client.send(createGetRequest(uri), BodyHandlers.ofString());
 
-        return reponse.toString();
+        return response.body();
     }
 
 
@@ -32,8 +33,8 @@ public class ScrapService {
             .version(Version.HTTP_1_1)
             .followRedirects(Redirect.NORMAL)
             .connectTimeout(Duration.ofSeconds(60))
-            .proxy(ProxySelector.of(new InetSocketAddress(host, port)))
-            .authenticator(Authenticator.getDefault())
+            //.proxy(ProxySelector.of(new InetSocketAddress(host, port)))
+            //.authenticator(Authenticator.getDefault())
             .build();
         
         
@@ -41,9 +42,9 @@ public class ScrapService {
     }
 
 
-    private HttpRequest createRequest(){
+    private HttpRequest createGetRequest(String uri){
         return HttpRequest.newBuilder()
-        .uri(URI.create("http://owc-lqd.dsc.ufcg.edu.br:8081/cs/login/login.htm"))
+        .uri(URI.create(uri))
         .timeout(Duration.ofMinutes(2))
         .header("Content-Type", "application/json")
         .GET()
